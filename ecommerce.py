@@ -84,6 +84,15 @@ def registra_utente_cliente():
 
     esegui_query_insert(q, v)
 
+def visualizza_saldo(id_utente):
+    q = "select credito from utenti where id = %s"
+    v = (id_utente,)
+
+    ris = query_select(q, v)
+
+    print(f"Il tuo credito è: {ris[0]['credito']}")
+
+
 
 if __name__ == '__main__':
     while True:
@@ -101,13 +110,14 @@ if __name__ == '__main__':
                 if risultato['ruolo'] == "admin":
                     menu_admin()
                 else:
+                    id_utente = risultato['id']
                     while True:
                         menu_cliente()
 
                         scelta_cliente = int(input("Scelta: "))
 
                         if scelta_cliente == 1:
-                            pass
+                            visualizza_saldo(id_utente)
                         elif scelta_cliente == 2:
                             pass
                         elif scelta_cliente == 6:
